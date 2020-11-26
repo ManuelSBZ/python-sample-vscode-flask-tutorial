@@ -31,6 +31,7 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pip install pytest pytest-azurepipelines
+    pip install pytest pytest-azurepipelines flake8
+    flake8 --statistics
     pytest
   displayName: 'pytest'
