@@ -34,3 +34,9 @@ steps:
     pip install pytest pytest-azurepipelines pytest-flake8
     pytest --flake8
   displayName: 'pytest&&flake8'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFiles: '**/test-*.xml'
+    testRunTitle: 'Publish test results for Python $(python.version)'
