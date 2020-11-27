@@ -33,11 +33,12 @@ steps:
 - script: |
     python -m pip install flake8
     flake8 .
+  displayName: flake8 linting *.py files
 
 - script: |
     pip install pytest-cov
     pytest test_test1.py --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
-
+  displayName: pytest evaluate tests.
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
