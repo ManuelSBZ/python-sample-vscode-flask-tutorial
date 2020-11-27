@@ -43,6 +43,7 @@ steps:
     pip install pytest-cov
     pytest test_test1.py --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
   displayName: pytest evaluate tests.
+  
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
@@ -57,17 +58,17 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-     rootFolderOrFile: '$(Build.SourcesDirectory)'
-     includeRootFolder: false
-     archiveType: 'zip'
-     archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
-     replaceExistingArchive: true
-     verbose: # (no value); this input is optional
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+    replaceExistingArchive: true
+    verbose: # (no value); this input is optional
 
 - task: AzureWebApp@1
   displayName: 'Deploy Azure Web App : {{ webAppName }}'
   inputs:
-      appType: webAppLinux
-      azureSubscription: $(ConnectedServiceName)
-      appName: $(webAppName)
-      package: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+    appType: webAppLinux
+    azureSubscription: $(ConnectedServiceName)
+    appName: $(webAppName)
+    package: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
