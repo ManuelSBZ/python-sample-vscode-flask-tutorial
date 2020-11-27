@@ -1,7 +1,6 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+variables:
+  ConnectedServiceName: 'prueba pipeline deploy'
+  WebAppName: 'prueba-flaskpipline'
 
 trigger:
 - main
@@ -23,10 +22,14 @@ steps:
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
+    architecture: x64
   displayName: 'Use Python $(python.version)'
 
 - script: |
+    python -m venv venv
+    source /venv/bin/activate
     python -m pip install --upgrade pip
+    python -m pip install setuptools 
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
@@ -51,3 +54,20 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+
+- task: ArchiveFiles@2
+  inputs:
+     rootFolderOrFile: '$(Build.SourcesDirectory)'
+     includeRootFolder: false
+     archiveType: 'zip'
+     archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+     replaceExistingArchive: true
+     verbose: # (no value); this input is optional
+
+- task: AzureWebApp@1
+  displayName: 'Deploy Azure Web App : {{ webAppName }}'
+  inputs:
+      appType: webAppLinux
+      azureSubscription: $(ConnectedServiceName)
+      appName: $(webAppName)
+      package: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
