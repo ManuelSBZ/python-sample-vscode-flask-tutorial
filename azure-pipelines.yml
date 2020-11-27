@@ -25,10 +25,10 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-- script: |
-    python -m pip install flake8
-    flake8 --exclude=./venv/lib/python3.6/site-packages/pip/_vendor . 
-  displayName: flake8 linting *.py files
+# - script: |
+#     python -m pip install flake8
+#     flake8 --exclude=./venv/lib/python3.6/site-packages/pip/_vendor . 
+#   displayName: flake8 linting *.py files
 
 #html is skipped
 - script: |
