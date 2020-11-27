@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="DESKTOP-49TML3D" name="pytest" skipped="0" tests="1" time="1.065" timestamp="2020-11-26T18:51:58.228946"><testcase classname="test_test1" file="test_test1.py" line="0" name="test_mock" time="0.017"><failure message="assert False">def test_mock():
+&gt;       assert False
+E       assert False
+
+test_test1.py:2: AssertionError</failure></testcase></testsuite></testsuites>
