@@ -35,6 +35,7 @@ steps:
     flake8 .
   displayName: flake8 linting *.py files
 
+#html is skipped
 - script: |
     pip install pytest-cov
     pytest test_test1.py --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
@@ -45,7 +46,7 @@ steps:
     testResultsFiles: '**/test-*.xml'
     testRunTitle: 'Publish test results for Python $(python.version)'
 
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
